@@ -6,6 +6,10 @@
     display: none;
 }
 
+#new-book {
+    margin-top: 30px;
+}
+
 .book-form {
     width: 50%;
     margin: 50px;
