@@ -18,24 +18,50 @@
                     <th class="thead">Publisher</th>
                     <th class="thead">N° Pages</th>
                     <th class="thead">Year</th>
-                    <th class="thead">Readed</th>
+                    <th class="thead">Readed</th>                    
                 </tr>
             </table>
         </div>
 
-        <form class="hide" id="first-form">
-            <label for="title">Title:</label>
-            <input type="text" id="title">
-            <label for="author">Author:</label>
-            <input type="text" id="author">
-            <label for="publisher">Publisher:</label>
-            <input type="text" id="publisher">
-            <label for="number-of-pages">Number of Pages:</label>
-            <input type="text" id="number-of-pages">
-            <label for="year">Year:</label>
-            <input type="text" id="year">
-            <label for="year">Readed:</label>
-            <input type="checkbox" id="readed" name="readed" value="yes">
+        <form class="hide book-form" id="first-form">
+            <div class="field">
+              <label class="label">Title</label>
+              <div class="control">
+                <input type="text" class="input" placeholder="" id="title">
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">Author</label>
+              <div class="control">
+                <input type="text" class="input" placeholder="" id="author">
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">Publisher</label>
+              <div class="control">                         
+                <input type="text" class="input" placeholder="" id="publisher">                
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">N° Pages</label>
+              <div class="control">      
+                <input type="text" class="input" placeholder="" id="number-of-pages">                
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">Year</label>
+              <div class="control">                
+                <input type="text" class="input" placeholder="" id="year">
+              </div>
+            </div>
+            <div class="field">
+              <div class="control">
+                <label class="checkbox">
+                  <input type="checkbox" id="readed" name="readed" value="yes">
+                  Readed
+                </label>
+              </div>
+            </div>            
         </form>
 
         <a class="button is-primary" onclick="toggleForm()">New Book</a>
@@ -72,12 +98,14 @@
         function render() {
             let root =  document.querySelector('#content');            
             myLibrary.forEach(elem => root.innerHTML += `<tr>
-                                                         <td>${elem.title}</td>
+                                                         <td id="title">${elem.title}</td>
                                                          <td>${elem.author}</td>
                                                          <td>${elem.publisher}</td>
                                                          <td>${elem.numberOfPages}</td>
                                                          <td>${elem.year}</td>
                                                          <td>${elem.readed}</td>
+                                                         <td><a class="button is-danger" onclick="RemoveBook(parent.title)">Remove</a></td>
+                                                         <td><a class="button is-warning" onclick="ToggleRead(parent.title)">Readed</a></td>
                                                          </tr>`)            
             //root.innerHTML = "<ul><li>uno</li><li>two</li></ul>";
         }
