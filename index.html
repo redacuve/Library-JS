@@ -22,12 +22,14 @@
               <label class="label">Title</label>
               <div class="control">
                 <input type="text" class="input" placeholder="" id="title">
+                <p class="help is-danger" id="title-danger"></p>
               </div>
             </div>
             <div class="field">
               <label class="label">Author</label>
               <div class="control">
                 <input type="text" class="input" placeholder="" id="author">
+                <p class="help is-danger" id="author-danger"></p>
               </div>
             </div>
             <div class="field">
@@ -52,7 +54,7 @@
                 <label class="label">Readed</label>
               <div class="control">
                 <label class="checkbox">
-                  <input type="checkbox" id="readed" name="readed" value="yes">
+                  <input type="checkbox" id="readed" name="readed">
                   True
                 </label>
               </div>
@@ -74,7 +76,7 @@
 
         let myLibrary = [];
 
-        function Book(title = null, author = null, publisher = null , numberOfPages = null, year = null, readed = 'no') {
+        function Book(title = null, author = null, publisher = null , numberOfPages = null, year = null, readed = null) {
             this.title = title;
             this.author = author;
             this.publisher = publisher;
@@ -83,7 +85,7 @@
             this.readed = readed;
         }
 
-        function addBookToTheLibrary(title = null, author = null, publisher = null , numberOfPages = null, year = null, readed = 'no'){
+        function addBookToTheLibrary(title = null, author = null, publisher = null , numberOfPages = null, year = null, readed = null){
             book = new Book(title, author, publisher, numberOfPages, year, readed);
             myLibrary.push(book);
         }
@@ -113,7 +115,7 @@
                                                          <td>${myLibrary[i].publisher}</td>
                                                          <td>${myLibrary[i].numberOfPages}</td>
                                                          <td>${myLibrary[i].year}</td>
-                                                         <td>${myLibrary[i].readed}</td>
+                                                         <td>${myLibrary[i].readed ? 'Yes' : 'No'}</td>
                                                          <td><a class="button is-danger" onclick="removeBook(${i})">Remove</a></td>
                                                          <td><a class="button is-warning" onclick="toggleRead(${i})">Readed</a></td>
                                                          </tr>`;
@@ -152,20 +154,28 @@
             const year = document.getElementById('year');
             const readed = document.getElementById('readed');
             if (title.value === ""){
-                console.log("is empty")
+              node = document.getElementById("title");
+              node.classList.add("is-danger");
+              document.getElementById('title-danger').innerHTML = "The Title can't be blank"
             }
             if (author.value === ""){
-                console.log("author is empy");
+                node = document.getElementById("author");
+                node.classList.add("is-danger");
+                document.getElementById("author-danger").innerHTML = "Author can't be blank"
             }
             if (author.value != "" && title.value != "") {
                 addBookToTheLibrary(title.value,author.value, publisher.value, numberOfPages.value, year.value, readed.checked);
                 render();
-                document.getElementById('title').value="";
+                document.getElementById('title-danger').innerHTML = "";
+                document.getElementById('author-danger').innerHTML = "";
+                document.getElementById('title').value = "";
+                document.getElementById('title').classList.remove('is-danger');                
                 document.getElementById('author').value = "";
+                document.getElementById('author').classList.remove('is-danger');
                 document.getElementById('publisher').value = "";
                 document.getElementById('number-of-pages').value = "";
                 document.getElementById('year').value = "";
-                document.getElementById('readed').checked = "false";
+                document.getElementById('readed').checked = false;
                 toggleForm();
             }
 
