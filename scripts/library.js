@@ -13,10 +13,37 @@ function addBookToTheLibrary(title = null, author = null, publisher = null , num
     book = new Book(title, author, publisher, numberOfPages, year, readed);
     myLibrary.push(book);
 }
-function fillArray(){
-    for(let i = 1 ; i < 5 ; i++) {
-        addBookToTheLibrary(`${i}-title`, `${i}-author`, `${i}-publisher`, `${i}-pages`, `${i}-year`, `no`);
-    }
+function fillArray(){    
+    addBookToTheLibrary("One Hundred Years of Solitude",
+                        "Gabriel García Márquez",
+                        "Editorial Sudamericana",
+                        "417",
+                        "1967",
+                        false);
+    addBookToTheLibrary("Harry Potter and the Goblet of Fire",
+                        "J. K. Rowling",
+                        "Bloomsbury",
+                        "636",
+                        "2000",
+                        true);
+    addBookToTheLibrary("Unlimited Power",
+                        "Tony Robbins",
+                        "Ballantine Books",
+                        "452",
+                        "1987",
+                        false);
+    addBookToTheLibrary("The Bible",
+                        "Jesus",
+                        "Zondervan",
+                        "1200",
+                        "1973",
+                        false);
+    addBookToTheLibrary("Jonathan Livingston Seagull",
+                        "Richard Bach",
+                        "Macmillan Inc.",
+                        "144",
+                        "1970",
+                        true);
 }
 
 function toggleForm(){
@@ -25,15 +52,21 @@ function toggleForm(){
 }
 
 function removeBook(i) {
-  alert("Deleted: " + i)
-  myLibrary.splice(i,1);
-  render();
+  let confirmDel = confirm(`Are you sure you want to remove  '${myLibrary[i].title}'?`);
+  if (confirmDel) {
+    alert("Deleted: " + `${myLibrary[i].title}`)
+    myLibrary.splice(i,1);
+    render();
+  }  
 }
 
 function toggleRead(i){
-  alert("Readed: " + i)
-  myLibrary[i].readed = !myLibrary[i].readed;
-  render();
+  let confirmRead = confirm(`Change read status for  '${myLibrary[i].title}?'`);
+  if (confirmRead) {    
+    myLibrary[i].readed = !myLibrary[i].readed;
+    render();
+  }  
+  
 }
 
 const cleanForm = function () {
@@ -47,7 +80,7 @@ const cleanForm = function () {
     document.getElementById('number-of-pages').value = "";
     document.getElementById('year').value = "";
     document.getElementById('readed').checked = false;
-}
+};
 
 document.getElementById("first-form-button").addEventListener("click", (event) => {
     event.preventDefault();
@@ -68,6 +101,7 @@ document.getElementById("first-form-button").addEventListener("click", (event) =
         document.getElementById("author-danger").innerHTML = "Author can't be blank"
     }
     if (author.value != "" && title.value != "") {
+        alert(`${title.value} was added to the list`)
         addBookToTheLibrary(title.value,author.value, publisher.value, numberOfPages.value, year.value, readed.checked);
         render();
         cleanForm();
