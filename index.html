@@ -55,14 +55,22 @@
               </div>
             </div>
             <div class="field">
+                <label class="label">Readed</label>
               <div class="control">
                 <label class="checkbox">
                   <input type="checkbox" id="readed" name="readed" value="yes">
-                  Readed
+                  Yes
                 </label>
               </div>
-            </div>            
+            </div>
+            <div class="field">
+                <div class="control">
+                  <button class="button is-link" type="submit" id="first-form-button">Submit</button>
+                </div>
+            </div>        
         </form>
+
+        
 
         <a class="button is-primary" onclick="toggleForm()">New Book</a>
 
@@ -76,29 +84,30 @@
 
         let myLibrary = [];
 
-        function Book(author = null, title = null, publisher = null , numberOfPages = null, year = null, readed = 'no') {
-            this.author = author;
+        function Book(title = null, author = null, publisher = null , numberOfPages = null, year = null, readed = 'no') {
             this.title = title;
+            this.author = author;
             this.publisher = publisher;
             this.numberOfPages = numberOfPages;
             this.year = year;
             this.readed = readed;
         }
 
-        function addBookToTheLibrary(author = null, title = null, publisher = null , numberOfPages = null, year = null, readed = 'no'){
-            book = new Book(author,title,publisher,numberOfPages,year,readed);
+        function addBookToTheLibrary(title = null, author = null, publisher = null , numberOfPages = null, year = null, readed = 'no'){
+            book = new Book(title, author, publisher, numberOfPages, year, readed);
             myLibrary.push(book);
         }
         function fillArray(){
             for(let i = 1 ; i < 5 ; i++) {
-                addBookToTheLibrary(`${i}-author`, `${i}-title`, `${i}-publisher`, `${i}-pages`, `${i}-year`, `no`);
+                addBookToTheLibrary(`${i}-title`, `${i}-author`, `${i}-publisher`, `${i}-pages`, `${i}-year`, `no`);
             }
         }
 
         function render() {
-            let root =  document.querySelector('#content');            
+            let root =  document.querySelector('#content');
+            root.innerHTML = "";
             myLibrary.forEach(elem => root.innerHTML += `<tr>
-                                                         <td id="title">${elem.title}</td>
+                                                         <td>${elem.title}</td>
                                                          <td>${elem.author}</td>
                                                          <td>${elem.publisher}</td>
                                                          <td>${elem.numberOfPages}</td>
@@ -109,6 +118,34 @@
                                                          </tr>`)            
             //root.innerHTML = "<ul><li>uno</li><li>two</li></ul>";
         }
+
+        document.getElementById("first-form-button").addEventListener("click", (event) => {
+            event.preventDefault();
+            const title = document.getElementById('title');
+            const author = document.getElementById('author');
+            const publisher = document.getElementById('publisher');
+            const numberOfPages = document.getElementById('number-of-pages');
+            const year = document.getElementById('year');
+            const readed = document.getElementById('readed');
+            if (title.value === ""){
+                console.log("is empty")
+            }
+            if (author.value === ""){
+                console.log("author is empy");
+            }
+            if (author.value != "" && title.value != "") {
+                addBookToTheLibrary(title.value,author.value, publisher.value, numberOfPages.value, year.value, readed.checked);
+                render();
+                document.getElementById('title').value="";
+                document.getElementById('author').value = "";
+                document.getElementById('publisher').value = "";
+                document.getElementById('number-of-pages').value = "";
+                document.getElementById('year').value = "";
+                document.getElementById('readed').checked = "false";
+                toggleForm();
+            }
+
+        });
         fillArray();
         render();
     </script>
