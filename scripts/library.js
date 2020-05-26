@@ -1,8 +1,3 @@
-function toggleForm(){
-    let form = document.getElementById("first-form");
-    form.classList.toggle("hide");
-}
-
 let myLibrary = [];
 
 function Book(title = null, author = null, publisher = null , numberOfPages = null, year = null, readed = null) {
@@ -23,6 +18,63 @@ function fillArray(){
         addBookToTheLibrary(`${i}-title`, `${i}-author`, `${i}-publisher`, `${i}-pages`, `${i}-year`, `no`);
     }
 }
+
+function toggleForm(){
+    let form = document.getElementById("first-form");
+    form.classList.toggle("hide");
+}
+
+function removeBook(i) {
+  alert("Deleted: " + i)
+  myLibrary.splice(i,1);
+  render();
+}
+
+function toggleRead(i){
+  alert("Readed: " + i)
+  myLibrary[i].readed = !myLibrary[i].readed;
+  render();
+}
+
+const cleanForm = function () {
+    document.getElementById('title-danger').innerHTML = "";
+    document.getElementById('author-danger').innerHTML = "";
+    document.getElementById('title').value = "";
+    document.getElementById('title').classList.remove('is-danger');                
+    document.getElementById('author').value = "";
+    document.getElementById('author').classList.remove('is-danger');
+    document.getElementById('publisher').value = "";
+    document.getElementById('number-of-pages').value = "";
+    document.getElementById('year').value = "";
+    document.getElementById('readed').checked = false;
+}
+
+document.getElementById("first-form-button").addEventListener("click", (event) => {
+    event.preventDefault();
+    const title = document.getElementById('title');
+    const author = document.getElementById('author');
+    const publisher = document.getElementById('publisher');
+    const numberOfPages = document.getElementById('number-of-pages');
+    const year = document.getElementById('year');
+    const readed = document.getElementById('readed');
+    if (title.value === ""){
+      node = document.getElementById("title");
+      node.classList.add("is-danger");
+      document.getElementById('title-danger').innerHTML = "The Title can't be blank"
+    }
+    if (author.value === ""){
+        node = document.getElementById("author");
+        node.classList.add("is-danger");
+        document.getElementById("author-danger").innerHTML = "Author can't be blank"
+    }
+    if (author.value != "" && title.value != "") {
+        addBookToTheLibrary(title.value,author.value, publisher.value, numberOfPages.value, year.value, readed.checked);
+        render();
+        cleanForm();
+        toggleForm();
+    }
+
+});
 
 function render() {
     let root =  document.querySelector('#content');
@@ -49,67 +101,7 @@ function render() {
                                                  <td><a class="button is-warning" onclick="toggleRead(${i})">Readed</a></td>
                                                  </tr>`;
     }
-
-    // myLibrary.forEach(elem => root.innerHTML += `<tr>
-    //                                              <td>${elem.index}</td>
-    //                                              <td>${elem.title}</td>
-    //                                              <td>${elem.author}</td>
-    //                                              <td>${elem.publisher}</td>
-    //                                              <td>${elem.numberOfPages}</td>
-    //                                              <td>${elem.year}</td>
-    //                                              <td>${elem.readed}</td>
-    //                                              <td><a class="button is-danger" onclick="removeBook()">Remove</a></td>
-    //                                              <td><a class="button is-warning" onclick="toggleRead()">Readed</a></td>
-    //                                              </tr>`)            
-    //root.innerHTML = "<ul><li>uno</li><li>two</li></ul>";
 }
 
-function removeBook(i) {
-  alert("Deleted: " + i)
-  myLibrary.splice(i,1);
-  render();
-}
-
-function toggleRead(i){
-  alert("Readed: " + i)
-  myLibrary[i].readed = !myLibrary[i].readed;
-  render();
-}
-
-document.getElementById("first-form-button").addEventListener("click", (event) => {
-    event.preventDefault();
-    const title = document.getElementById('title');
-    const author = document.getElementById('author');
-    const publisher = document.getElementById('publisher');
-    const numberOfPages = document.getElementById('number-of-pages');
-    const year = document.getElementById('year');
-    const readed = document.getElementById('readed');
-    if (title.value === ""){
-      node = document.getElementById("title");
-      node.classList.add("is-danger");
-      document.getElementById('title-danger').innerHTML = "The Title can't be blank"
-    }
-    if (author.value === ""){
-        node = document.getElementById("author");
-        node.classList.add("is-danger");
-        document.getElementById("author-danger").innerHTML = "Author can't be blank"
-    }
-    if (author.value != "" && title.value != "") {
-        addBookToTheLibrary(title.value,author.value, publisher.value, numberOfPages.value, year.value, readed.checked);
-        render();
-        document.getElementById('title-danger').innerHTML = "";
-        document.getElementById('author-danger').innerHTML = "";
-        document.getElementById('title').value = "";
-        document.getElementById('title').classList.remove('is-danger');                
-        document.getElementById('author').value = "";
-        document.getElementById('author').classList.remove('is-danger');
-        document.getElementById('publisher').value = "";
-        document.getElementById('number-of-pages').value = "";
-        document.getElementById('year').value = "";
-        document.getElementById('readed').checked = false;
-        toggleForm();
-    }
-
-});
 fillArray();
 render();
