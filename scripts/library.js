@@ -16,23 +16,6 @@ function toggleForm() {
   form.classList.toggle('hide');
 }
 
-function removeBook(i) {
-  const confirmDel = window.confirm(`Are you sure you want to remove  '${myLibrary[i].title}'?`);
-  if (confirmDel) {
-    alert(`Deleted: ${myLibrary[i].title}`);
-    myLibrary.splice(i, 1);
-    render();
-  }
-}
-
-function toggleRead(i) {
-  const confirmRead = window.confirm(`Change read status for  '${myLibrary[i].title}?'`);
-  if (confirmRead) {
-    myLibrary[i].readed = !myLibrary[i].readed;
-    render();
-  }
-}
-
 function render() {
   const root = document.querySelector('#content');
   root.innerHTML = `<tr>
@@ -43,6 +26,8 @@ function render() {
             <th class="thead">N° Pages</th>
             <th class="thead">Year</th>
             <th class="thead">Readed</th>                    
+            <th class="thead">Delete</th>                    
+            <th class="thead">Read Action</th>                    
         </tr>`;
 
   for (let i = 0; i < myLibrary.length; i += 1) {
@@ -54,11 +39,29 @@ function render() {
                                                  <td>${myLibrary[i].numberOfPages}</td>
                                                  <td>${myLibrary[i].year}</td>
                                                  <td>${myLibrary[i].readed ? 'Yes' : 'No'}</td>
-                                                 <td><a class="button is-danger" onclick="${removeBook.name}(${i})">Remove</a></td>
-                                                 <td><a class="button is-warning" onclick="${toggleRead.name}(${i})">Readed</a></td>
+                                                 <td><a class="button is-danger" onclick="removeBook(${i})">Remove</a></td>
+                                                 <td><a class="button is-warning" onclick="toggleRead(${i})">Readed</a></td>
                                                  </tr>`;
   }
 }
+
+const removeBook = (i) => { // eslint-disable-line no-unused-vars
+  const confirmDel = window.confirm(`Are you sure you want to remove  '${myLibrary[i].title}'?`); // eslint-disable-line no-alert
+  if (confirmDel) {
+    alert(`Deleted: ${myLibrary[i].title}`); // eslint-disable-line no-alert
+    myLibrary.splice(i, 1);
+    render();
+  }
+};
+
+const toggleRead = (i) => { // eslint-disable-line no-unused-vars
+  const confirmRead = window.confirm(`Change read status for  '${myLibrary[i].title}?'`); // eslint-disable-line no-alert
+  if (confirmRead) {
+    myLibrary[i].readed = !myLibrary[i].readed;
+    render();
+  }
+};
+
 
 function addBookToTheLibrary(title = null, author = null,
   publisher = null, numberOfPages = null, year = null, readed = null) {
@@ -99,7 +102,7 @@ function fillArray() {
     true);
 }
 
-const cleanForm = function () {
+const cleanForm = () => {
   document.getElementById('title-danger').innerHTML = '';
   document.getElementById('author-danger').innerHTML = '';
   document.getElementById('title').value = '';
@@ -132,7 +135,6 @@ document.getElementById('first-form-button').addEventListener('click', (event) =
     document.getElementById('author-danger').innerHTML = "Author can't be blank";
   }
   if (author.value !== '' && title.value !== '') {
-    alert(`${title.value} was added to the list`);
     addBookToTheLibrary(title.value, author.value,
       publisher.value, numberOfPages.value, year.value, readed.checked);
     render();

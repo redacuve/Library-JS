@@ -11,6 +11,10 @@
 }
 
 .book-form {
+    margin: 5px 1px 2px;
+}
+
+#first-form {
+    margin-top: 10px;
     width: 50%;
-    margin: 50px;
 }

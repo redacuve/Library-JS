@@ -9,15 +9,35 @@
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </head>
 <body>
-    <div class="wrapper">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+          My Library
+        </h1>
+        <h2 class="subtitle">
+          Look at my best books.
+        </h2>
+      </div>
+    </div>
+  </section>
+    <div class="container is-fluid">
         <div id="root">
             <table class="table is-bordered" id="content">
             </table>
         </div>
 
         <a class="button is-primary" id="new-book" onclick="toggleForm()">New Book</a>
-
-        <form class="hide book-form" id="first-form">
+        
+        <div class="message is-dark hide" id="first-form">
+          <div class="message-header">
+            <p>Add a new Book</p>
+            <button class="delete" aria-label="delete" onclick="toggleForm()"></button>
+          </div>
+          <div class="message-body">
+          
+          
+        <form class="book-form" >
             <div class="field">
               <label class="label">Title</label>
               <div class="control">
@@ -61,11 +81,12 @@
             </div>
             <div class="field">
                 <div class="control">
-                  <button class="button is-link" type="submit" id="first-form-button">Submit</button>
+                  <button class="button is-link is-fullwidth" type="submit" id="first-form-button">Submit</button>
                 </div>
             </div>        
         </form>
-
+      </div>
+    </div>
     </div>
 
     <script type="text/javascript" src="./scripts/library.js"></script>
