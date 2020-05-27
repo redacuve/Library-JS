@@ -12,13 +12,14 @@ Small app aplication for keep the record of every book you want to add including
 
 
 ## Live Version
-Pending: [https:](https://)
+Here: [https://raw.githack.com/redacuve/Library-JS/library/index.html](https://raw.githack.com/redacuve/Library-JS/library/index.html)
 
 ## Usage
 ### Delete books and change read status
-![Delete books and change read status](img/usage_1.gif) 
+<img src="img/usage_1.gif" alt="Delete books and change status" width="400" />
+
 ### Register new book
-![Register new book](img/usage_2.gif)
+<img src="img/usage_2.gif" alt="register new book" width="400" />
 
 You can clone the repo and run over your personal server.
 
@@ -27,7 +28,7 @@ You can clone the repo and run over your personal server.
 Contributions are more than welcome!<br/>Feel free to check [issues page](https://github.com/redacuve/Library-JS/issues).
 
 
-1. Fork (https://github.com/ricardovaltierra/kilometers-per-truck/fork)
+1. Fork (https://github.com/redacuve/Library-JS/fork)
 2. Create your working branch (git checkout -b [branch_name])
 3. Commit your changes (git commit -am 'what you will add or fix or improve')
 4. Push (git push origin [branch_name])
