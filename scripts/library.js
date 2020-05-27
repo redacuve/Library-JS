@@ -1,6 +1,7 @@
 const myLibrary = [];
 
-function Book(title = null, author = null, publisher = null, numberOfPages = null, year = null, readed = null) {
+function Book(title = null, author = null,
+  publisher = null, numberOfPages = null, year = null, readed = null) {
   this.title = title;
   this.author = author;
   this.publisher = publisher;
@@ -9,10 +10,62 @@ function Book(title = null, author = null, publisher = null, numberOfPages = nul
   this.readed = readed;
 }
 
-function addBookToTheLibrary(title = null, author = null, publisher = null, numberOfPages = null, year = null, readed = null) {
-  book = new Book(title, author, publisher, numberOfPages, year, readed);
+
+function toggleForm() {
+  const form = document.getElementById('first-form');
+  form.classList.toggle('hide');
+}
+
+function removeBook(i) {
+  const confirmDel = window.confirm(`Are you sure you want to remove  '${myLibrary[i].title}'?`);
+  if (confirmDel) {
+    alert(`Deleted: ${myLibrary[i].title}`);
+    myLibrary.splice(i, 1);
+    render();
+  }
+}
+
+function toggleRead(i) {
+  const confirmRead = window.confirm(`Change read status for  '${myLibrary[i].title}?'`);
+  if (confirmRead) {
+    myLibrary[i].readed = !myLibrary[i].readed;
+    render();
+  }
+}
+
+function render() {
+  const root = document.querySelector('#content');
+  root.innerHTML = `<tr>
+            <th class="thead">ID</th>
+            <th class="thead">Title</th>
+            <th class="thead">Author</th>
+            <th class="thead">Publisher</th>
+            <th class="thead">N° Pages</th>
+            <th class="thead">Year</th>
+            <th class="thead">Readed</th>                    
+        </tr>`;
+
+  for (let i = 0; i < myLibrary.length; i += 1) {
+    root.innerHTML += `<tr>
+                                                 <td>${i + 1}</td>
+                                                 <td>${myLibrary[i].title}</td>
+                                                 <td>${myLibrary[i].author}</td>
+                                                 <td>${myLibrary[i].publisher}</td>
+                                                 <td>${myLibrary[i].numberOfPages}</td>
+                                                 <td>${myLibrary[i].year}</td>
+                                                 <td>${myLibrary[i].readed ? 'Yes' : 'No'}</td>
+                                                 <td><a class="button is-danger" onclick="${removeBook.name}(${i})">Remove</a></td>
+                                                 <td><a class="button is-warning" onclick="${toggleRead.name}(${i})">Readed</a></td>
+                                                 </tr>`;
+  }
+}
+
+function addBookToTheLibrary(title = null, author = null,
+  publisher = null, numberOfPages = null, year = null, readed = null) {
+  const book = new Book(title, author, publisher, numberOfPages, year, readed);
   myLibrary.push(book);
 }
+
 function fillArray() {
   addBookToTheLibrary('One Hundred Years of Solitude',
     'Gabriel García Márquez',
@@ -46,28 +99,6 @@ function fillArray() {
     true);
 }
 
-function toggleForm() {
-  const form = document.getElementById('first-form');
-  form.classList.toggle('hide');
-}
-
-function removeBook(i) {
-  const confirmDel = confirm(`Are you sure you want to remove  '${myLibrary[i].title}'?`);
-  if (confirmDel) {
-    alert('Deleted: ' + `${myLibrary[i].title}`);
-    myLibrary.splice(i, 1);
-    render();
-  }
-}
-
-function toggleRead(i) {
-  const confirmRead = confirm(`Change read status for  '${myLibrary[i].title}?'`);
-  if (confirmRead) {
-    myLibrary[i].readed = !myLibrary[i].readed;
-    render();
-  }
-}
-
 const cleanForm = function () {
   document.getElementById('title-danger').innerHTML = '';
   document.getElementById('author-danger').innerHTML = '';
@@ -83,6 +114,7 @@ const cleanForm = function () {
 
 document.getElementById('first-form-button').addEventListener('click', (event) => {
   event.preventDefault();
+  let node = null;
   const title = document.getElementById('title');
   const author = document.getElementById('author');
   const publisher = document.getElementById('publisher');
@@ -99,41 +131,15 @@ document.getElementById('first-form-button').addEventListener('click', (event) =
     node.classList.add('is-danger');
     document.getElementById('author-danger').innerHTML = "Author can't be blank";
   }
-  if (author.value != '' && title.value != '') {
+  if (author.value !== '' && title.value !== '') {
     alert(`${title.value} was added to the list`);
-    addBookToTheLibrary(title.value, author.value, publisher.value, numberOfPages.value, year.value, readed.checked);
+    addBookToTheLibrary(title.value, author.value,
+      publisher.value, numberOfPages.value, year.value, readed.checked);
     render();
     cleanForm();
     toggleForm();
   }
 });
-
-function render() {
-  const root = document.querySelector('#content');
-  root.innerHTML = `<tr>
-            <th class="thead">ID</th>
-            <th class="thead">Title</th>
-            <th class="thead">Author</th>
-            <th class="thead">Publisher</th>
-            <th class="thead">N° Pages</th>
-            <th class="thead">Year</th>
-            <th class="thead">Readed</th>                    
-        </tr>`;
-
-  for (let i = 0; i < myLibrary.length; i++) {
-    root.innerHTML += `<tr>
-                                                 <td>${i + 1}</td>
-                                                 <td>${myLibrary[i].title}</td>
-                                                 <td>${myLibrary[i].author}</td>
-                                                 <td>${myLibrary[i].publisher}</td>
-                                                 <td>${myLibrary[i].numberOfPages}</td>
-                                                 <td>${myLibrary[i].year}</td>
-                                                 <td>${myLibrary[i].readed ? 'Yes' : 'No'}</td>
-                                                 <td><a class="button is-danger" onclick="removeBook(${i})">Remove</a></td>
-                                                 <td><a class="button is-warning" onclick="toggleRead(${i})">Readed</a></td>
-                                                 </tr>`;
-  }
-}
 
 fillArray();
 render();
