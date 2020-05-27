@@ -18,16 +18,15 @@ function toggleForm() {
 
 function render() {
   const root = document.querySelector('#content');
-  root.innerHTML = `<tr>
+  root.innerHTML = `<tr class='th is-selected'>
             <th class="thead">ID</th>
             <th class="thead">Title</th>
             <th class="thead">Author</th>
             <th class="thead">Publisher</th>
             <th class="thead">N° Pages</th>
             <th class="thead">Year</th>
-            <th class="thead">Readed</th>                    
-            <th class="thead">Delete</th>                    
-            <th class="thead">Read Action</th>                    
+            <th class="thead">Readed</th>                                
+            <th class="thead centered" colspan='2'>Actions</th> 
         </tr>`;
 
   for (let i = 0; i < myLibrary.length; i += 1) {
